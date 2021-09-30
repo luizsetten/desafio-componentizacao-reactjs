@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 
 import { SideBar } from './components/SideBar';
 import { Content } from './components/Content';
 
 import './styles/global.scss';
 
-export function App() {
+function AppComponent() {
   const [selectedGenreId, setSelectedGenreId] = useState(1);
 
   return (
@@ -16,3 +16,5 @@ export function App() {
     </div>
   )
 }
+
+export const App = memo(AppComponent);

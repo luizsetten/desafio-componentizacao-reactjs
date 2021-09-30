@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, memo, useCallback} from 'react';
 
 import { Button } from './Button';
 
@@ -13,7 +13,7 @@ interface SideBarProps {
   selectedGenreId: number;
 }
 
-export function SideBar({setSelectedGenreId, selectedGenreId}: SideBarProps) {
+function SideBarComponent({setSelectedGenreId, selectedGenreId}: SideBarProps) {
   const [genres, setGenres] = useState<GenreResponseProps[]>([]);
 
   useEffect(() => {
@@ -22,10 +22,9 @@ export function SideBar({setSelectedGenreId, selectedGenreId}: SideBarProps) {
     });
   }, []);
 
-
-  function handleClickButton(id: number) {
+  const handleClickButton = useCallback((id: number) => {
     setSelectedGenreId(id);
-  }
+  }, [])
 
   return (
     <nav className="sidebar">
@@ -46,3 +45,5 @@ export function SideBar({setSelectedGenreId, selectedGenreId}: SideBarProps) {
   </nav>
   )
 }
+
+export const SideBar = memo(SideBarComponent, (prevProps, nextProps) => Object.is(prevProps, nextProps))

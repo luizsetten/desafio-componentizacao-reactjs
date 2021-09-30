@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, memo} from 'react';
 
 import { MovieCard } from './MovieCard';
 
@@ -23,7 +23,7 @@ interface ContentProps {
   selectedGenreId: number;
 }
 
-export function Content({selectedGenreId}: ContentProps) {
+function ContentComponent({selectedGenreId}: ContentProps) {
   const [movies, setMovies] = useState<MovieProps[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
 
@@ -53,3 +53,5 @@ export function Content({selectedGenreId}: ContentProps) {
       </div>
   );
 }
+
+export const Content = memo(ContentComponent, (prevProps, nextProps) => Object.is(prevProps, nextProps))
